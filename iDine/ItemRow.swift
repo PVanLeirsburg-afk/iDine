@@ -22,7 +22,7 @@ struct ItemRow: View {
                 Text("$\(item.price)")
             }
             
-            Spacer()
+            Spacer() // sends next item all the way right
             
             ForEach(item.restrictions, id: \.self) { restriction in
                 Text(restriction)

@@ -14,12 +14,17 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(menu) { section in
-                    Section(section.name) {
+                    Section(section.name) {  // creates a grouped area in a list
                         ForEach(section.items) { item in
-                            ItemRow(item: item)
+                            NavigationLink(value: item) {
+                                ItemRow(item: item)
+                            }
                         }
                     }
                 }
+            }
+            .navigationDestination(for: MenuItem.self) { item in
+                ItemDetail(item: item)
             }
             .navigationTitle("Menu")
             .listStyle(.grouped)
