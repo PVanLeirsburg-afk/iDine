@@ -9,6 +9,11 @@ import SwiftUI
 
 struct ItemDetail: View {
     let item: MenuItem
+    
+    @EnvironmentObject var order: Order
+    // default item not necessary.  Swift expects that oder value will be set.
+    // also any time value changes, it will reload and update everywhere.
+    
     var body: some View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
@@ -26,6 +31,12 @@ struct ItemDetail: View {
             }
             Text(item.description)
                 .padding()
+            
+            Button("Order This") {
+                order.add(item: item)
+            }
+            .buttonStyle(.borderedProminent)
+            
             Spacer()
         }
         .navigationTitle(item.name)
@@ -33,8 +44,11 @@ struct ItemDetail: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        ItemDetail(item: MenuItem.example)
+struct ItemDetail_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            ItemDetail(item: MenuItem.example)
+                .environmentObject(Order())
+        }
     }
 }

@@ -8,11 +8,53 @@
 import SwiftUI
 
 struct CheckoutView: View {
+    @EnvironmentObject var order: Order
+    
+    let paymentTypes = ["Cash", "Credit Card", "iDine Points"]
+    @State private var  paymentType = "Cash"
+    
+    @State private var addLoyaltyDetails = false
+    @State private var loyaltyNumber = ""
+    
+    let tipAmounts = [10, 15, 20, 25, 0]
+    @State private var tipAmount = 15
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Section {
+            Form { // puts label next to what you will pick
+                Picker("How do you want to pay?", selection: $paymentType) {
+                    ForEach(paymentTypes, id: \.self) {
+                        Text($0) // first value in array
+                    }
+                }
+                Toggle("Add iDine loyalty card", isOn: $addLoyaltyDetails.animation()) //.animation() makes the TextField display more smoothly
+                
+                if addLoyaltyDetails {
+                    TextField("Enter your iDine ID", text: $loyaltyNumber)
+                }
+                Section("Add a tip?") {
+                    Picker("Percentage:", selection: $tipAmount) {
+                        ForEach(tipAmounts, id:\.self) {
+                            Text("\($0)%")
+                        }
+                    }
+                    .pickerStyle(.segmented) // all options show up at one time.  Not a dropdown
+                }
+                
+                Section("total: $100") {
+                    Button("Confirm Order") {
+                        // place the order
+                    }
+                    
+                }
+            }
+            .navigationTitle("Payment")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
 #Preview {
     CheckoutView()
+        .environmentObject(Order())
 }
