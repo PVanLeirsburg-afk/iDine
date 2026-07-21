@@ -7,9 +7,10 @@
 //
 
 import SwiftUI
+import Combine  // ObservableObject and @Published come from Combine NOT Swift - MISSING FROM VIDEO
 
-class Order {
-    var items = [MenuItem]()
+class Order: ObservableObject { // announces changes to any views that are watching
+    @Published var items = [MenuItem]() //will send alert any time it is changed
 
     var total: Int {
         if items.count > 0 {
