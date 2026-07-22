@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine  // ObservableObject and @Published come from Combine NOT Swift - MISSING FROM VIDEO
 
+// an object (Order can be used in all other views.  It calculates all values below and stores them in an environment that can be accessed by declaring a variable in an alternate view: @EnvirnomentObject var order: Order.  When you want a value from the object, refer to it by order.total (name of variable.name of object)
 class Order: ObservableObject { // announces changes to any views that are watching
     @Published var items = [MenuItem]() //will send alert any time it is changed
 

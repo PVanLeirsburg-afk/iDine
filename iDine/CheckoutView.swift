@@ -19,7 +19,13 @@ struct CheckoutView: View {
     let tipAmounts = [10, 15, 20, 25, 0]
     @State private var tipAmount = 15
     
-    var body: some View {
+    var totalPrice: String {  //formats a calculated number and stores it in a variable as a string
+        let total = Double(order.total)
+        let tipValue = total / 100 * Double(tipAmount)
+        return (total + tipValue).formatted(.currency(code: "USD"))
+    }
+    
+    var body: some View { //body is invoked any time a state variable changes
         Section {
             Form { // puts label next to what you will pick
                 Picker("How do you want to pay?", selection: $paymentType) {
@@ -41,7 +47,7 @@ struct CheckoutView: View {
                     .pickerStyle(.segmented) // all options show up at one time.  Not a dropdown
                 }
                 
-                Section("total: $100") {
+                Section("total: \(totalPrice)") {
                     Button("Confirm Order") {
                         // place the order
                     }
