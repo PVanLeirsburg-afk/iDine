@@ -20,6 +20,7 @@ struct OrderView: View {
                             Text("$\(item.price)")
                         }
                     }
+                    .onDelete(perform: deleteItems) // performs the deleteItems function - Delete occurs when items are swiped.
                 }
                 
                 Section {
@@ -27,9 +28,17 @@ struct OrderView: View {
                         CheckoutView()
                     }
                 }
+                .disabled(order.items.isEmpty)  //disables when no items are present - grays out, does not disappear
             }
             .navigationTitle("Order")
+            .toolbar {
+                EditButton()  // adds an option to modify order
+            }
         }
+    }
+    
+    func deleteItems(at offsets: IndexSet) { // deletes items previously added.
+        order.items.remove(atOffsets: offsets) //remove is a built in method
     }
 }
 
